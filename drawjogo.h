@@ -12,8 +12,6 @@ class DrawJogo : public QWidget
 {
     Q_OBJECT
 private:
-    int lagura;
-    int altura;
 
     //posicao da esfera na tela;
     int esf_posx;
@@ -33,7 +31,6 @@ private:
     // Calculo de tempo
     time_t userTmpInicio;
     time_t userTmpFim;
-    time_t gameTmpCorrido;
     std::vector<time_t> tmpUser;
 
     // variaveis de jogo

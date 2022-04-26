@@ -9,18 +9,15 @@
 
 DrawJogo::DrawJogo(QWidget *parent): QWidget (parent)
 {
-
-    lagura = 800;
-    altura = 560;
-
     acertos = 0;
     erros = 0;
     tentativas = 10;
     tempos = "";
     tempoMedio = 0.0;
-
-    userTmpInicio = time(0);
-    gameState = 0;
+    userTmpInicio = 0;
+    userTmpFim = 0;
+    tmpUser.clear();
+    gameState = 0; 
     this->setPosition();
     this->setColor();
 }
@@ -73,15 +70,21 @@ void DrawJogo::keyPress(QKeyEvent *tecla)
 {
     if(tecla->key() == Qt::Key_Enter){
         if(gameState == 0){
-           gameState = 1;
-           userTmpInicio = time(nullptr);
+
+            acertos = 0;
+            erros = 0;
+            tentativas = 10;
+            tempos = "";
+            tempoMedio = 0.0;
+            userTmpFim = 0;
+            tmpUser.clear();
+            gameState = 1;
+            this->setPosition();
+            this->setColor();
+            userTmpInicio = time(nullptr);
 
         }else if(gameState == 2){
             gameState = 0;
-            erros = 0;
-            acertos = 0;
-            tempos = "";
-            tempoMedio = 0.0;
         }
     } else if(gameState == 1){
         switch(tecla->key())
@@ -141,7 +144,7 @@ void DrawJogo::keyPress(QKeyEvent *tecla)
 
                 userTmpInicio = time(nullptr);
             } else {
-                userTmpFim = clock();
+                userTmpFim = time(nullptr);
                 tmpUser.push_back(userTmpFim - userTmpInicio);
                 erros++;
 
@@ -187,7 +190,7 @@ void DrawJogo::keyPress(QKeyEvent *tecla)
             tempoMedio += auxtempo;
             tmpUser.pop_back();
         }
-        if(tempoMedio > 0) tempoMedio = float(tempoMedio)/float(interador);
+        tempoMedio = float(tempoMedio)/float(interador);
         gameState = 2;
         tentativas = 10;
     }
